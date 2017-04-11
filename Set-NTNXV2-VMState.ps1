@@ -1,4 +1,3 @@
-
 ############################################################
 ##
 ## Function: Set-NTNXV2-VMState
@@ -11,17 +10,17 @@
 function Set-NTNXV2-VMState{
 <#
 .NAME
-	Set-NTNXV2-VMState
+  Set-NTNXV2-VMState
 .SYNOPSIS
-	Change ESXi VM powerstate via Nutanix
+  Change ESXi VM powerstate via Nutanix
 .DESCRIPTION
-	Change ESXi VM powerstate via Nutanix
+  Change ESXi VM powerstate via Nutanix
 .NOTES
-	Authors:  sandeep.mp@nutanix.com
-	
-	Logs: C:\Users\<USERNAME>\AppData\Local\Temp\NutanixCmdlets\logs
+  Authors:  sandeep.mp@nutanix.com
+  
+  Logs: C:\Users\<USERNAME>\AppData\Local\Temp\NutanixCmdlets\logs
 .LINK
-	www.nutanix.com
+  www.nutanix.com
 .EXAMPLE
     Set-NTNXV2-VMState -Server "10.10.10.10" -UserName "User_name" -Password "Password" -VM "VM_name" -Transition "VM_State"
 #> 
@@ -37,6 +36,14 @@ function Set-NTNXV2-VMState{
             Begin{
                     #Add NutanixCMDletsPSSnapin
                     Add-PSSnapin NutanixCMDletsPSSnapin
+
+                    $pssnapin = Get-PSSnapin
+                    if($pssnapin.name -notcontains "NutanixCMDletsPSSnapin")
+                         {
+                                write-host "Nutanix CMDlets not installed"
+                                break
+                         }
+
                     $pwd = ConvertTo-SecureString $password -AsPlainText -Force
                        
                     #Disconnect session if any
