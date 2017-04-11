@@ -47,11 +47,11 @@ function Set-NTNXV2-VMState{
 
                             if($pssnapincheck -eq $false)
                                 {
-                                    write-host "Nutanix CMDlets not installed"
+                                    write-host "Nutanix CMDlets not installed" -ForegroundColor Red
                                 }
                             if($psver -eq $false)
                                 {
-                                    write-host "Powershell version should be 3.0 or above"
+                                    write-host "Powershell version should be 3.0 or above" -ForegroundColor Red
                                 }
                            break
                          }
