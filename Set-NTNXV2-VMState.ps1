@@ -30,7 +30,7 @@ function Set-NTNXV2-VMState{
                   [Parameter(Mandatory=$True)][String]$UserName,
                   [Parameter(Mandatory=$True)][String]$Password,
                   [Parameter(Mandatory=$True)][string]$VM,
-                  [Parameter(Mandatory=$True)][ValidateSet("ON","OFF","RESET","SUSPEND","RESUME")][System.String]$Transition
+                  [Parameter(Mandatory=$True)][ValidateSet("ON","OFF","RESET","SUSPEND","RESUME")][String]$Transition
                  )
 
             Begin{
