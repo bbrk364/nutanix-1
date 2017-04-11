@@ -37,12 +37,25 @@ function Set-NTNXV2-VMState{
                     #Add NutanixCMDletsPSSnapin
                     Add-PSSnapin NutanixCMDletsPSSnapin
 
+                    #Prerequisites Check
+                                        
                     $pssnapin = Get-PSSnapin
-                    if($pssnapin.name -notcontains "NutanixCMDletsPSSnapin")
+                    $pssnapincheck = $pssnapin.name -contains "NutanixCMDletsPSSnapin"
+                    $psver = $PSVersionTable.PSVersion.Major -ge 3
+                    if(($pssnapincheck -eq $false) -or ($psver -eq $false))
                          {
-                                write-host "Nutanix CMDlets not installed"
-                                break
+
+                            if($pssnapincheck -eq $false)
+                                {
+                                    write-host "Nutanix CMDlets not installed"
+                                }
+                            if($psver -eq $false)
+                                {
+                                    write-host "Powershell version should be 3.0 or above"
+                                }
+                           break
                          }
+
 
                     $pwd = ConvertTo-SecureString $password -AsPlainText -Force
                        
