@@ -34,7 +34,11 @@ function New-NTNXVM-V2{
                   [Parameter(Mandatory=$True)][String]$UserName,
                   [Parameter(Mandatory=$True)][String]$Password,
                   [Parameter(Mandatory=$True)][string]$VMname,
-                       [Parameter(Mandatory=$True)][ValidateSet("CentOS 4/5/6/7","CentOS 4/5/6/7 (64-bit)","Debian GNU/Linux 4","Debian GNU/Linux 4 (64 bit)","Debian GNU/Linux 5","Debian GNU/Linux 5 (64 bit)","Debian GNU/Linux 6","Debian GNU/Linux 6 (64 bit)","MS-DOS","OpenSUSE Linux (64 bit)","Red Hat Enterprise Linux 2","Red Hat Enterprise Linux 3","Red Hat Enterprise Linux 3 (64 bit)","Red Hat Enterprise Linux 4","Red Hat Enterprise Linux 4 (64 bit)","Red Hat Enterprise Linux 5","Red Hat Enterprise Linux 5 (64 bit) (experimental)","Red Hat Enterprise Linux 6","Red Hat Enterprise Linux 6 (64 bit)","Red Hat Enterprise Linux 7","Red Hat Enterprise Linux 7 (64 bit)","Red Hat Linux 2.1","Solaris 6","Solaris 7","Solaris 8","Solaris 9","Ubuntu Linux","Ubuntu Linux (64 bit)","Windows 2000 Advanced Server","Windows 2000 Professional","Windows 2000 Server","Windows 7","Windows 7 (64 bit)","Windows 8","Windows 8 (64 bit)","Windows Millenium Edition","Windows NT 4","Windows Server 2003, Enterprise Edition","Windows Server 2003, Enterprise Edition (64 bit)","Windows Server 2003, Standard Edition","Windows Server 2003, Standard Edition (64 bit)","Windows Server 2003, Web Edition","Windows Server 2008 R2 (64 bit)","Windows Server 2012 (64 bit)","Windows XP Home Edition","Windows XP Professional","Windows XP Professional Edition (64 bit)")][System.String]$OSType
+                  [Parameter(Mandatory=$True)][string]$Description,
+                  [Parameter(Mandatory=$True)][int32]$VCpu,
+                  [Parameter(Mandatory=$True)][int]$Memory,
+                  [Parameter(Mandatory=$True)][int]$Disk,
+                       [Parameter(Mandatory=$false)][ValidateSet("CentOS 4/5/6/7","CentOS 4/5/6/7 (64-bit)","Debian GNU/Linux 4","Debian GNU/Linux 4 (64 bit)","Debian GNU/Linux 5","Debian GNU/Linux 5 (64 bit)","Debian GNU/Linux 6","Debian GNU/Linux 6 (64 bit)","MS-DOS","OpenSUSE Linux (64 bit)","Red Hat Enterprise Linux 2","Red Hat Enterprise Linux 3","Red Hat Enterprise Linux 3 (64 bit)","Red Hat Enterprise Linux 4","Red Hat Enterprise Linux 4 (64 bit)","Red Hat Enterprise Linux 5","Red Hat Enterprise Linux 5 (64 bit) (experimental)","Red Hat Enterprise Linux 6","Red Hat Enterprise Linux 6 (64 bit)","Red Hat Enterprise Linux 7","Red Hat Enterprise Linux 7 (64 bit)","Red Hat Linux 2.1","Solaris 6","Solaris 7","Solaris 8","Solaris 9","Ubuntu Linux","Ubuntu Linux (64 bit)","Windows 2000 Advanced Server","Windows 2000 Professional","Windows 2000 Server","Windows 7","Windows 7 (64 bit)","Windows 8","Windows 8 (64 bit)","Windows Millenium Edition","Windows NT 4","Windows Server 2003, Enterprise Edition","Windows Server 2003, Enterprise Edition (64 bit)","Windows Server 2003, Standard Edition","Windows Server 2003, Standard Edition (64 bit)","Windows Server 2003, Web Edition","Windows Server 2008 R2 (64 bit)","Windows Server 2012 (64 bit)","Windows XP Home Edition","Windows XP Professional","Windows XP Professional Edition (64 bit)")][System.String]$OSType
                  )
 
             Begin{
@@ -132,7 +136,8 @@ switch($OStype)
                             break
                         }
 
-                  }
+                        [int64]$memoryGB = $Memory * 1024
+                   }
 
             Process{
                 
@@ -140,16 +145,22 @@ switch($OStype)
 
                     $creds = New-Object System.Management.Automation.PSCredential ($username, $pwd)  
                     $headers = @{"X-Requested-With"="powershell"}  
-                    $Uri = "https://${server}:9440/api/nutanix/v2.0/vms/${vmid}/set_power_state/"
+                    $Uri = "https://${server}:9440/PrismGateway/services/rest/v2.0/vms/"
 $body = "{
-  ""transition"": ""$Transition""
-}"
+  ""description"": ""$Description"",
+  ""guest_os"": ""$Type"",
+  ""memory_mb"": $memoryGB,
+  ""name"": ""$VMname"",
+  ""num_vcpus"": $VCpu
+  }"
 
                     $out = Invoke-RestMethod -Method POST -Uri $Uri -Credential $creds -Headers $Header -Body $body -ContentType application/json
                    }
 
             End{
                 return $out
+                     
                }
+          
 }
 
