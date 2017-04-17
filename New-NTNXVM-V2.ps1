@@ -26,7 +26,15 @@ function New-NTNXVM-V2{
 .LINK
 	www.nutanix.com
 .EXAMPLE
-    New-NTNXVM-V2 -Server "10.10.10.10" -UserName "User_name" -Password "Password" -VM "VM_name" -Transition "VM_State"
+    New-NTNXVM-V2 -Server "10.10.10.10" -UserName "User_name" -Password "Password" -VMname "Test5" -Description "Test5" -VCpu 1 -Memory 1 -Disk 1 -OSType 'Windows 7 (64 bit)'
+
+.SYNTAX
+    New-NTNXVM-V2 [-Server] <string> -UserName <string> -Password <string> -VMname <string> -Description <string> -VCpu <int> -Memory <int> -Disk <int> [-OSType <string> {CentOS 4/5/6/7 | CentOS 4/5/6/7 (64-bit) | Debian GNU/Linux 4 | Debian GNU/Linux 4 (64 bit) | 
+    Debian GNU/Linux 5 | Debian GNU/Linux 5 (64 bit) | Debian GNU/Linux 6 | Debian GNU/Linux 6 (64 bit) | MS-DOS | OpenSUSE Linux (64 bit) | Red Hat Enterprise Linux 2 | Red Hat Enterprise Linux 3 | Red Hat Enterprise Linux 3 (64 bit) | Red Hat Enterprise Linux 4 | Red 
+    Hat Enterprise Linux 4 (64 bit) | Red Hat Enterprise Linux 5 | Red Hat Enterprise Linux 5 (64 bit) (experimental) | Red Hat Enterprise Linux 6 | Red Hat Enterprise Linux 6 (64 bit) | Red Hat Enterprise Linux 7 | Red Hat Enterprise Linux 7 (64 bit) | Red Hat Linux 
+    2.1 | Solaris 6 | Solaris 7 | Solaris 8 | Solaris 9 | Ubuntu Linux | Ubuntu Linux (64 bit) | Windows 2000 Advanced Server | Windows 2000 Professional | Windows 2000 Server | Windows 7 | Windows 7 (64 bit) | Windows 8 | Windows 8 (64 bit) | Windows Millenium Edition 
+    | Windows NT 4 | Windows Server 2003, Enterprise Edition | Windows Server 2003, Enterprise Edition (64 bit) | Windows Server 2003, Standard Edition | Windows Server 2003, Standard Edition (64 bit) | Windows Server 2003, Web Edition | Windows Server 2008 R2 (64 bit) 
+    | Windows Server 2012 (64 bit) | Windows XP Home Edition | Windows XP Professional | Windows XP Professional Edition (64 bit)}]  [<CommonParameters>]
 #> 
 
             param(
