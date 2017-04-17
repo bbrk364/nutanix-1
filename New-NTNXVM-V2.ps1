@@ -162,7 +162,7 @@ $body = "{
   ""num_vcpus"": $VCpu
   }"
 
-                    $out = Invoke-RestMethod -Method POST -Uri $Uri -Credential $creds -Headers $Header -Body $body -ContentType application/json
+                    $out = Invoke-RestMethod -Method POST -Uri $Uri -Credential $creds -Headers $Headers -Body $body -ContentType application/json 
                    }
 
             End{
