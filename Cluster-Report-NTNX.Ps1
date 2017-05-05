@@ -73,6 +73,7 @@ param(
               }
          $pwd = ConvertTo-SecureString $password -AsPlainText -Force
          $data = @()
+         $epoch = Get-Date -Date "01/01/1970"
          [int64]$start_time = ((New-TimeSpan -Start $epoch -End $startdate).TotalMilliseconds)*1000
          [int64]$end_time = ((New-TimeSpan -Start $epoch -End $enddate).TotalMilliseconds)*1000
     }
