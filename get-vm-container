@@ -1,0 +1,23 @@
+Add-PSSnapin NutanixCmdletsPSSnapin
+Connect-NTNXCluster -Server "Cluster_IP" -UserName "username" -AcceptInvalidSSLCerts -ForcedConnection
+$ctr = Get-NTNXContainer
+$data = @()
+$count = $vms.count
+$result = @()
+foreach($vm in $vms)
+{
+	$into = new-object PSObject
+	Add-member -inputobject $into -membertype Noteproperty -Name VMname $vm.vmname
+    $ctrcount = $vm.containeruuids.count
+
+     for ($i=0;$i -lt $ctrcount;$i++)
+         {
+            $ctrname = ($ctr | where {$_.containeruuid -eq $vm.containerUuids[$i]}).name
+            Add-member -inputobject $into -membertype Noteproperty -Name Container$i $ctrname
+         }
+    $data +=$into
+}  
+#show the result
+$data
+
+ 
