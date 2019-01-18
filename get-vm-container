@@ -2,7 +2,7 @@ Add-PSSnapin NutanixCmdletsPSSnapin
 Connect-NTNXCluster -Server "Cluster_IP" -UserName "username" -AcceptInvalidSSLCerts -ForcedConnection
 $ctr = Get-NTNXContainer
 $data = @()
-$vms = Get-NTNXVirtualMachine
+$vms = Get-NTNXVM
 $count = $vms.count
 $result = @()
 foreach($vm in $vms)
