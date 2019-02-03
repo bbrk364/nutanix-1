@@ -1,5 +1,5 @@
 Add-PSSnapin NutanixCmdletsPSSnapin
-Connect-NTNXCluster -Server "custerip" -UserName "username" -AcceptInvalidSSLCerts -ForcedConnection
+Connect-NTNXCluster -Server "10.136.106.130" -UserName "win2016" -AcceptInvalidSSLCerts -ForcedConnection
 $vm_uuid = Read-Host "VM-uuid"
 $vms = @()
 $vms= Get-NTNXVM
@@ -11,7 +11,9 @@ foreach($vm in $vms)
 	$into = new-object PSObject
 	Add-member -inputobject $into -membertype Noteproperty -Name VMName $vm.vmname
     Add-member -inputobject $into -membertype Noteproperty -Name VMID $vm.vmid
+    Add-member -inputobject $into -membertype Noteproperty -Name VMUUID $vm.uuid
     $data +=$into
 }  
 
-$data
+$vmid = $data | Where-Object {$_.vmuuid -eq "$vm_uuid"}
+$vmid
