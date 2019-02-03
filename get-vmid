@@ -1,5 +1,5 @@
 Add-PSSnapin NutanixCmdletsPSSnapin
-Connect-NTNXCluster -Server "10.136.106.130" -UserName "win2016" -AcceptInvalidSSLCerts -ForcedConnection
+Connect-NTNXCluster -Server "cluster-ip" -UserName "username" -AcceptInvalidSSLCerts -ForcedConnection
 $vm_uuid = Read-Host "VM-uuid"
 $vms = @()
 $vms= Get-NTNXVM
