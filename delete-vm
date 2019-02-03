@@ -1,0 +1,17 @@
+Add-PSSnapin NutanixCmdletsPSSnapin
+Connect-NTNXCluster -Server "cluster-ip" -UserName "username" -AcceptInvalidSSLCerts -ForcedConnection
+$vm_name = Read-Host "VM-Name"
+$vms = @()
+$data = @()
+$vms= Get-NTNXVM
+$count = $vms.count
+foreach($vm in $vms)
+{
+	$into = new-object PSObject
+	Add-member -inputobject $into -membertype Noteproperty -Name VMname $vm.vmname
+    Add-member -inputobject $into -membertype Noteproperty -Name uuid $vm.uuid
+    $data +=$into
+}  
+$vm_to_delete = $data | Where-Object {$_.vmname -eq "$vm_name"}
+$vm_to_delete.uuid
+Remove-NTNXVirtualMachine -Vmid $vm_to_delete.uuid
